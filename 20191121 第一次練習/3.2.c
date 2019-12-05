@@ -1,9 +1,9 @@
-#include <random>
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 int main() {
-    srand(time(nullptr));
+    srand(time(NULL));
     int sum[13] = {0};
     for (int i = 0; i < 36000; i++) {
         int a = rand() % 6 + 1;

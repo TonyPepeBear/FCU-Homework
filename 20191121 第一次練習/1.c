@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <time.h>
-#include <random>
+#include <stdlib.h>
 
 int main() {
     printf("(a)\n");
