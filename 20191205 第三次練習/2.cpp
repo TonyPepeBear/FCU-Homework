@@ -4,16 +4,15 @@
 
 void sort(int arr[], int size) {
     for (int i = 0; i < size; i++) {
-        int min = arr[i], minIndex = -1;
+        int minIndex = i;
         for (int j = i; j < size; ++j) {
-            if (arr[j] < min) {
-                min = arr[j];
+            if (arr[j] < arr[minIndex]) {
                 minIndex = j;
             }
         }
         if (minIndex != -1) {
             int temp = arr[i];
-            arr[i] = min;
+            arr[i] = arr[minIndex];
             arr[minIndex] = temp;
         }
     }
