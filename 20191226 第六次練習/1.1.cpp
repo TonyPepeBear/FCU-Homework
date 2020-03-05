@@ -99,7 +99,6 @@ void check(int cards[5][2]) {
     }
 }
 
-
 void shuffle(unsigned int wDeck[][FACES]) {
     size_t row;
     size_t column;
