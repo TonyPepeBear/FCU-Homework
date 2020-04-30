@@ -54,8 +54,6 @@ void editData() {
     scanf("%s%s%s", pInsert.lastName, pInsert.firstName, pInsert.age);
     for (int i = 0; i < N; ++i) {
         if (strcmp(p[i].lastName, pInsert.lastName) == 0 && strcmp(p[i].firstName, pInsert.firstName) == 0) {
-            strcpy(p[i].lastName, pInsert.lastName);
-            strcpy(p[i].firstName, pInsert.firstName);
             strcpy(p[i].age, pInsert.age);
             findFlag = true;
             break;

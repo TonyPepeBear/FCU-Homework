@@ -1,16 +1,32 @@
-#include <cstdio>
+#include <iostream>
+
+using namespace std;
 
 int main() {
-    FILE *file = fopen("datasize.txt", "wb+");
-    fprintf(file, "char\t\t\t%lu\n", sizeof(char));
-    fprintf(file, "unsigned char\t%lu\n", sizeof(unsigned char));
-    fprintf(file, "short int\t\t\t%lu\n", sizeof(short int));
-    fprintf(file, "unsigned short int\t\t\t%lu\n", sizeof(unsigned short int));
-    fprintf(file, "int\t\t\t%lu\n", sizeof(int));
-    fprintf(file, "long int\t\t\t%lu\n", sizeof(long int));
-    fprintf(file, "unsigned long int\t\t\t%lu\n", sizeof(unsigned long int));
-    fprintf(file, "float\t\t\t%lu\n", sizeof(float));
-    fprintf(file, "double\t\t\t%lu\n", sizeof(double));
-    fprintf(file, "long double\t\t\t%lu\n", sizeof(long double));
-    return 0;
+    int a, b;
+
+//    scanf("%d", &a);
+    cin >> a;
+
+//    printf("%d\n", a);
+    cout << a << endl;
+
+//    scanf("%d%d", &a, &b);
+    cin >> a >> b;
+
+//    printf("%d %d\n", a,b);
+    cout << a << " " << b << endl;
+
+
+    int nums[100];
+
+    for (int i = 0; i < 100; ++i) {
+        cin >> nums[i];
+    }
+
+    for (int j = 0; j < 100; ++j) {
+        cout << nums[j] << endl;
+    }
+
+
 }
