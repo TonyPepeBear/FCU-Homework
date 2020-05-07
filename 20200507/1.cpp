@@ -1,5 +1,4 @@
 #include <cstdio>
-#include <cstdlib>
 
 struct node {
     char c;
