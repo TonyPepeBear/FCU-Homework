@@ -6,12 +6,12 @@ struct node {
     node *nextPtr;
 };
 
-void concatenate(node *n1, node *n2) {
-    node *current = n1;
-    while (n1->nextPtr != NULL) {
-        n1 = n1->nextPtr;
+void link(node *a, node *b) {
+    node *current = a;
+    while (a->nextPtr != NULL) {
+        a = a->nextPtr;
     }
-    n1->nextPtr = n2;
+    a->nextPtr = b;
 }
 
 void insert(node *n, char c) {
@@ -42,7 +42,7 @@ int main() {
     node n2 = {'a', NULL};
     insert(&n2, 'b');
     insert(&n2, 'c');
-    concatenate(&n1, &n2);
+    link(&n1, &n2);
     printNode(&n1);
     return 0;
 }
