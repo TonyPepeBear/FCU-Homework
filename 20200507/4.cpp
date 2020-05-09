@@ -50,9 +50,16 @@ int main() {
 
     insert(n, 'b');
     insert(n, 'c');
+    insert(n, 'd');
+    insert(n, 'e');
+    insert(n, 'f');
+    insert(n, 'c');
+    insert(n, 'h');
+    insert(n, 'i');
+    insert(n, 'j');
 
     printN(n);
     node *m = getReverseNode(n);
     printN(m);
-
+    return 0;
 }
