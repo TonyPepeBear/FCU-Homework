@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run in docker",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-it",
+                "-v",
+                "${file}:/tmp/t.cpp",
+                "frolvlad/alpine-gxx",
+                "sh",
+                "-c",
+                "c++ /tmp/t.cpp -o t.out && /t.out"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
