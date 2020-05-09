@@ -81,5 +81,5 @@ int main() {
     sort(a);
 
     print(a);
-
+    return 0;
 }
