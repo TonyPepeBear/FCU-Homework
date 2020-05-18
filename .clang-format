@@ -1,0 +1,8 @@
+BasedOnStyle:    Google
+Language:    Cpp
+ColumnLimit:     100
+UseTab:    Never
+IndentWidth: 4
+AllowShortBlocksOnASingleLine: Empty
+AllowShortLoopsOnASingleLine: false
+SpaceAfterCStyleCast : true
