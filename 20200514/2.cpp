@@ -23,6 +23,7 @@ node *searchList(node *head, int value) {
 
 int main() {
     node *head = (node *) malloc(sizeof(node));
+    head->next = NULL;
     insert(head, 1);
     insert(head, 2);
     insert(head, 4);
