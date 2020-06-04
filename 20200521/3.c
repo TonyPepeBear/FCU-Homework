@@ -46,7 +46,7 @@ int main(void) {
 
 void insertNode(TreeNodePtr *treePtr, int value) {
     if (*treePtr == NULL) {
-        *treePtr = malloc(sizeof(TreeNode));
+        *treePtr = (TreeNodePtr) malloc(sizeof(TreeNode));
         if (*treePtr != NULL) {
             (*treePtr)->data = value;
             (*treePtr)->leftPtr = NULL;
@@ -67,8 +67,9 @@ void insertNode(TreeNodePtr *treePtr, int value) {
 
 void levelOrder(TreeNodePtr nodePtr) {
     LinkNode *linkNode = (LinkNode *) malloc(sizeof(LinkNode));
-    linkNode->next = malloc(sizeof(LinkNode));
+    linkNode->next = (LinkNode *)malloc(sizeof(LinkNode));
     linkNode->next->data = nodePtr;
+    linkNode->next->next = NULL;
     LinkNode *temp = linkNode->next;
 
     while (temp->data->rightPtr != NULL || temp->data->leftPtr != NULL) {
