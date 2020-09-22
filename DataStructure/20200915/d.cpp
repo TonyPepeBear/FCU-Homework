@@ -6,9 +6,13 @@
 void f(char *c, int n, int i);
 
 int main() {
-    char c[N];
-    scanf("%s", c);
-    f(c, strlen(c), 0);
+    int x = 0;
+    scanf("%d", &x);
+    for (int i = 0; i < x; ++i) {
+        char c[N];
+        scanf("%s", c);
+        f(c, strlen(c), 0);
+    }
     return 0;
 }
 
@@ -18,10 +22,8 @@ void f(char *c, int n, int i) {
             char nC[N];
             strcpy(nC, c);
             // change
-            char t = c[j];
-            for (int k = j; k > i; --k) {
-                nC[k] = nC[k - 1];
-            }
+            char t = nC[j];
+            nC[j] = nC[i];
             nC[i] = t;
             f(nC, n, i + 1);
         }

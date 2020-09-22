@@ -1,11 +1,13 @@
 #include <cstdio>
 
-void h(int n, char a, char b, char c, int *counter) {
+int move = 0;
+
+void hanoi(int n, char start, char reg, char des) {
     if (n > 0) {
-        h(n - 1, a, c, b, counter);
-        ++*counter;
-        printf("%d: 將第 %d 層圓盤由 %c 柱移至 %c 柱\n", *counter, n, a, c);
-        h(n - 1, b, a, c, counter);
+        hanoi(n - 1, start, des, reg);
+        move++;
+        printf("%d:%d %c %c\n", move, n, start, des);
+        hanoi(n - 1, reg, start, des);
     }
 }
 
@@ -13,6 +15,6 @@ int main() {
     int n = 0;
     scanf("%d", &n);
     int counter = 0;
-    h(n, 'a', 'b', 'c', &counter);
+    hanoi(n, 'a', 'b', 'c');
     return 0;
 }
