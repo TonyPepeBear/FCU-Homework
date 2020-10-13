@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stack>
 
 void printMaze(int *maze, int n) {
     for (int i = 0; i < n; ++i) {
@@ -15,14 +14,41 @@ struct point {
     int y;
 };
 
-point Point(int x, int y) {
-    point p{};
-    p.x = x;
-    p.y = y;
-    return p;
+struct stack {
+    point *data;
+    stack *next;
+};
+
+void push(stack *s, int x, int y) {
+    while (s->next != NULL) {
+        s = s->next;
+    }
+    stack *n = (stack *) malloc(sizeof(stack));
+
+    n->data = (point *) malloc(sizeof(point));
+    n->data->x = x;
+    n->data->y = y;
+    s->next = n;
 }
 
-void printPoint(point p) { std::cout << "(" << p.x << ", " << p.y << ")" << std::endl; }
+void pop(stack *s) {
+    while (s->next->next != NULL) {
+        s = s->next;
+    }
+    s->next = NULL;
+}
+
+point *top(stack *s) {
+    while (s->next != NULL) {
+        s = s->next;
+    }
+    return s->data;
+}
+
+bool isEmpty(stack *s) {
+    if (s->next == NULL) return true;
+    return false;
+}
 
 int main() {
     int n = 0;
@@ -35,63 +61,65 @@ int main() {
         }
     }
 
-    std::stack<point> walk;
-    walk.push(Point(0, 0));
+    stack *walk = (stack *) malloc(sizeof(stack));
+    push(walk, 0, 0);
     maze[0] = 2;
-    while (!(walk.top().x == n - 1 && walk.top().y == n - 1)) {
-        //        printPoint(walk.top());
-        int x = walk.top().x;
-        int y = walk.top().y;
+    while (!(top(walk)->x == n - 1 && top(walk)->y == n - 1)) {
+        int x = top(walk)->x;
+        int y = top(walk)->y;
         // up
         if (x - 1 >= 0 && maze[(x - 1) * n + y] == 1) {
-            walk.push(Point(x - 1, y));
+            push(walk, x - 1, y);
             maze[(x - 1) * n + y] = 2;
             continue;
         }
         // right
         if (y + 1 < n && maze[x * n + y + 1] == 1) {
-            walk.push(Point(x, y + 1));
+            push(walk, x, y + 1);
             maze[x * n + y + 1] = 2;
             continue;
         }
         // down
         if (x + 1 < n && maze[(x + 1) * n + y] == 1) {
-            walk.push(Point(x + 1, y));
+            push(walk, x + 1, y);
             maze[(x + 1) * n + y] = 2;
             continue;
         }
         // left
         if (y - 1 >= 0 && maze[x * n + y - 1] == 1) {
-            walk.push(Point(x, y - 1));
+            push(walk, x, y - 1);
             maze[x * n + y - 1] = 2;
             continue;
         }
         maze[x * n + y] = 0;
-        walk.pop();
+        pop(walk);
     }
 
-    std::stack<char> x;
-    while (!walk.empty()) {
-        point p = walk.top();
-        walk.pop();
-        point pp;
-        if (!walk.empty())
-            pp = walk.top();
+    char s[1000];
+    int len = 0;
+    while (!isEmpty(walk)) {
+        point *p = top(walk);
+        pop(walk);
+        point *pp;
+        if (!isEmpty(walk))
+            pp = top(walk);
         else
             break;
-        if (p.x != pp.x) {
-            x.push(p.x > pp.x ? 'S' : 'N');
+        if (p->x != pp->x) {
+            len++;
+            s[len] = p->x > pp->x ? 'S' : 'N';
             continue;
         }
-        if (p.y != pp.y) {
-            x.push(p.y > pp.y ? 'E' : 'W');
+        if (p->y != pp->y) {
+            len++;
+            s[len] = p->y > pp->y ? 'E' : 'W';
             continue;
         }
     }
 
-    while (!x.empty()) {
-        std::cout << x.top();
-        x.pop();
+    while (len > 0) {
+        std::cout << s[len];
+        len--;
     }
     std::cout << std::endl;
 
