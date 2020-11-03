@@ -11,19 +11,14 @@ typedef struct Node {
 #define N 10000
 
 node *reverse(node *head, node *tail) {
-    node *n[N];
-    int count = 0;
-    node *t = head;
-    while (t != NULL) {
-        n[count] = t;
-        count++;
-        t = t->next;
+    node *n = NULL, *p = NULL, *c = head;
+    while (c != NULL) {
+        n = p;
+        p = c;
+        c = c->next;
+        p->next = n;
     }
-    n[0]->next = NULL;
-    for (int i = count - 1; i > 0; --i) {
-        n[i]->next = n[i - 1];
-    }
-    return n[count - 1];
+    return p;
 }
 
 int main() { return 0; }
