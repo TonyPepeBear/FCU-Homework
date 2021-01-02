@@ -1,3 +1,3 @@
 project(fcu_homework)
 
-add_executable(a DataStructure/20201222/a.c)
+add_executable(a DataStructure/20201229/a.c)
