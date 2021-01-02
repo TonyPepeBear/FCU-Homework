@@ -49,22 +49,13 @@ void merge(int *arr, int low, int mid, int high) {
     }
     int i = 0, j = 0, k = low;
     while (i < xSize && j < ySize) {
-        if (x[i] <= y[j]) {
-            arr[k] = x[i];
-            i++;
-        } else {
-            arr[k] = y[j];
-            j++;
-        }
-        k++;
+        arr[k++] = x[i] <= y[j] ? x[i++] : y[j++];
     }
     while (i < xSize) {
-        arr[k] = x[i++];
-        k++;
+        arr[k++] = x[i++];
     }
     while (j < ySize) {
-        arr[k] = y[j++];
-        k++;
+        arr[k++] = y[j++];
     }
 }
 
