@@ -257,8 +257,8 @@ int main(int argc, char *argv[]) {
                 } else if (c == LINE_COMMENT) {
                     //                    printf("%03d : Comment line\n", line_count);
                 } else {
-                    printf("%06X\t%-10s %-10s %-10s,%-10s (FMT=%X, ADDR=%X)\n", pc, line.symbol,
-                           line.op, line.operand1, line.operand2, line.fmt, line.addressing);
+                    printf("%06X %-10s %-10s %-10s %-10s\n", pc, line.symbol, line.op,
+                           line.operand1, line.operand2);
                     if (strlen(line.symbol) > 0) { insertSymbol(tab, line.symbol, pc); }
                     setPC(line, &pc);
                 }
