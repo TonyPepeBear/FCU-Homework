@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "2-optable.c"
+#include "symtab.c"
 
 /* Public variables and functions */
 #define ADDR_SIMPLE 0x01
@@ -52,6 +53,7 @@ int process_line(LINE *line) {
     int c;
     int state;
     int ret;
+
     Instruction *op;
 
     c = ASM_token(buf); /* get the first token of a line */
@@ -189,7 +191,90 @@ int process_line(LINE *line) {
     }
 }
 
+void setPC(LINE line, unsigned *pc) {
+    unsigned p = *pc;
+    if (line.code == OP_START) {
+        int s = 0, t = 1;
+        for (int i = 0; i < strlen(line.operand1); ++i, t *= 10) {
+            s += (line.operand1[strlen(line.operand1) - i - 1] - '0') * t;
+        }
+        p = s;
+    } else if (line.code == OP_BYTE) {
+        if (line.operand1[0] == 'C') { p += strlen(line.operand1) - 3; }
+        if (line.operand1[0] == 'X') { p += (strlen(line.operand1) - 3) / 2; }
+    } else if (line.code == OP_WORD) {
+        p += 3;
+    } else if (line.code == OP_RESB) {
+        int s = 0, t = 1;
+        for (int i = 0; i < strlen(line.operand1); ++i, t *= 10) {
+            s += (line.operand1[strlen(line.operand1) - i - 1] - '0') * t;
+        }
+        p += s;
+    } else if (line.code == OP_RESW) {
+        int s = 0, t = 1;
+        for (int i = 0; i < strlen(line.operand1); ++i, t *= 10) {
+            s += (line.operand1[strlen(line.operand1) - i - 1] - '0') * t;
+        }
+        p += 3 * s;
+    } else {
+        switch (line.fmt) {
+            case FMT0:
+                p += 0;
+                break;
+            case FMT1:
+                p += 1;
+                break;
+            case FMT2:
+                p += 2;
+                break;
+            case FMT3:
+                p += 3;
+                break;
+            case FMT4:
+                p += 4;
+                break;
+        }
+    }
+    *pc = p;
+}
+
 int main(int argc, char *argv[]) {
+    int c, line_count = 0;
+    char buf[LEN_SYMBOL];
+    LINE line;
+    unsigned pc = 0;
+    struct Symtab *tab = newSymtab();
+
+    if (argc < 2) {
+        printf("Usage: %s fname.asm\n", argv[0]);
+    } else {
+        if (ASM_open(argv[1]) == NULL) {
+            printf("%s File not found!!\n", argv[1]);
+        } else {
+            while ((c = process_line(&line)) != LINE_EOF) {
+                if (c == LINE_ERROR) {
+                    printf("%03d : Error\n", line_count);
+                } else if (c == LINE_COMMENT) {
+                    //                    printf("%03d : Comment line\n", line_count);
+                } else {
+                    printf("%04X\t%-10s %-10s %-10s,%-10s (FMT=%X, ADDR=%X)\n", pc, line.symbol,
+                           line.op, line.operand1, line.operand2, line.fmt, line.addressing);
+                    if (strlen(line.symbol) > 0) { insertSymbol(tab, line.symbol, pc); }
+                    setPC(line, &pc);
+                }
+                line_count++;
+            }
+            printf("\n\n");
+            for (int i = 0; i < tab->size; ++i) {
+                printf("%-10s%4X\n", tab->symbols[i].name, tab->symbols[i].value);
+            }
+
+            ASM_close();
+        }
+    }
+}
+
+/*int main(int argc, char *argv[]) {
     int i, c, line_count;
     char buf[LEN_SYMBOL];
     LINE line;
@@ -214,4 +299,4 @@ int main(int argc, char *argv[]) {
             ASM_close();
         }
     }
-}
+}*/
