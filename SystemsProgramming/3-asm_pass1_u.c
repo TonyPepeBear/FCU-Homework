@@ -257,16 +257,16 @@ int main(int argc, char *argv[]) {
                 } else if (c == LINE_COMMENT) {
                     //                    printf("%03d : Comment line\n", line_count);
                 } else {
-                    printf("%04X\t%-10s %-10s %-10s,%-10s (FMT=%X, ADDR=%X)\n", pc, line.symbol,
+                    printf("%06X\t%-10s %-10s %-10s,%-10s (FMT=%X, ADDR=%X)\n", pc, line.symbol,
                            line.op, line.operand1, line.operand2, line.fmt, line.addressing);
                     if (strlen(line.symbol) > 0) { insertSymbol(tab, line.symbol, pc); }
                     setPC(line, &pc);
                 }
                 line_count++;
             }
-            printf("\n\n");
+            printf("\nProgram Length = %X\n\n", pc);
             for (int i = 0; i < tab->size; ++i) {
-                printf("%-10s%4X\n", tab->symbols[i].name, tab->symbols[i].value);
+                printf("%8s: %06X\n", tab->symbols[i].name, tab->symbols[i].value);
             }
 
             ASM_close();
